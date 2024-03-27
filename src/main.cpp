@@ -3,6 +3,8 @@
 #include <Adafruit_GFX.h>
 #include <TFT_ILI9163C.h>
 
+typedef uint8_t mInt;
+
 // Color definitions
 #define	BLACK   0x0000
 #define	BLUE    0x001F
@@ -20,6 +22,20 @@ volatile int16_t oldVal1 = 0;
 #define __DC 4
 
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
+
+class Rectangle{
+  public:
+    Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor) :  
+        x(cx), y(cy), h(ch), l(cl), color(cColor) {} //construtor da classe
+
+    uint8_t x, y; //coordenadas
+    uint8_t h, l; //altura e largura
+    uint16_t color;
+};
+
+void pintarRetangulo(Rectangle &rect){
+  tft.fillRect(rect.x, rect.y, rect.l, rect.h, rect.color);
+}
 
 void drawPointerHelper(int16_t val,uint8_t x,uint8_t y,uint8_t r,uint16_t color) {
 
@@ -94,8 +110,9 @@ void setup(){
 }
 
 void loop(void){
-  
-  tft.fillRect(x, y, w, h, COLOR);
+
+  Rectangle Verm (1, 1, 2, 3, RED); //coordenas (x,y), tamanho (h, l), cor
+  pintarRetangulo(Verm);
 
 
   /*for(int i= 0; i<3; i++){
