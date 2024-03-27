@@ -22,20 +22,26 @@ volatile int16_t oldVal1 = 0;
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
 
 void drawPointerHelper(int16_t val,uint8_t x,uint8_t y,uint8_t r,uint16_t color) {
+
   float dsec, toSecX, toSecY;
+  
   int16_t minValue = 0;
   int16_t maxValue = 255;
+  
   int fromDegree = 150;//start
   int toDegree = 240;//end
+  
   if (val > maxValue) val = maxValue;
   if (val < minValue) val = minValue;
+  
   dsec = (((float)(uint16_t)(val - minValue) / (float)(uint16_t)(maxValue - minValue) * toDegree) + fromDegree) * (PI / 180);
+  
   toSecX = cos(dsec) * (r / 1.35);
   toSecY = sin(dsec) * (r / 1.35);
+
   tft.drawLine(x, y, 1 + x + toSecX, 1 + y + toSecY, color);
   tft.fillCircle(x,y,2,color);
 }
-
 
 void faceHelper(uint8_t x,uint8_t y,uint8_t r,int from,int to,float dev){
   float dsec,fromSecX,fromSecY,toSecX,toSecY;
@@ -80,7 +86,6 @@ void drawNeedle(int16_t val,uint8_t x,uint8_t y,uint8_t r,uint16_t color,uint16_
   }
 }
 
-
 void setup(){
   Serial.begin(115200);
   Serial.println("Hello!");
@@ -89,7 +94,11 @@ void setup(){
 }
 
 void loop(void){
-  for(int i= 0; i<3; i++){
+  
+  tft.fillRect(x, y, w, h, COLOR);
+
+
+  /*for(int i= 0; i<3; i++){
         tft.setRotation(0);
         tft.fillScreen(RED);
         delay(1000);
@@ -111,4 +120,5 @@ void loop(void){
         tft.fillRect(0,80,128,160, GREEN);
         delay(1000);
         }
+        */
 }
