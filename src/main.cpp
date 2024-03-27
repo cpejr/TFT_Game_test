@@ -23,6 +23,58 @@ volatile int16_t oldVal1 = 0;
 
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
 
+class Joystick {
+
+#define LIMITE_X_LEFT 0
+#define LIMITE_X_RIGTH 128
+#define LIMITE_Y_UP 128
+#define LIMITE_Y_DOWN 0
+
+  public:
+  Joystick () : x(0), y(0) {}
+  /*
+  ____________
+  |1         |      1 - posicao inicial do cursor
+  |          |      2 - esquerda (-), direita (+)
+  |          |      3 - cima (+), baixo (-)
+  |__________|
+  */
+
+  void moveLeft(){
+    if (this->x != LIMITE_X_LEFT){
+        this->x--;
+    }
+    else{//limite da tela
+    }
+  }
+
+  void moveRight(){
+    if (this->x != LIMITE_X_RIGTH){
+        this->x++;
+    }
+    else{//limite da tela
+    }
+  }
+
+  void moveUp(){
+    if (this->x != LIMITE_Y_UP){
+        this->x++;
+    }
+    else{//limite da tela
+    }
+  }
+
+  void moveDown(){
+    if (this->x != LIMITE_Y_DOWN){
+        this->x--;
+    }
+    else{//limite da tela
+    }
+  }
+  
+  mInt x, y;
+};
+
 class Rectangle{
   public:
     Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor) :  
