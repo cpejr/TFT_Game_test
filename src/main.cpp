@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <SPI.h>
-#include <Adafruit_GFX.h>
-#include <TFT_ILI9163C.h>
+#include "Display.hpp"
 
 typedef uint8_t mInt;
 
@@ -19,6 +18,9 @@ typedef uint8_t mInt;
 #define __DC 4
 
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
+
+Rectangle Verm (127, 91, 5, 1, RED, tft); //coordenas (x,y), tamanho (h, l), cor
+Rectangle cursor(1,1,3,3,BLUE, tft);
 
 class Joystick {
 
@@ -72,33 +74,9 @@ class Joystick {
   mInt x, y;
 };
 
-class Rectangle{
-  public:
-    Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor) :  
-        x(cx), y(cy), h(ch), l(cl), color(cColor) {} //construtor da classe
-
-    uint8_t x, y; //coordenadas
-    uint8_t h, l; //altura e largura
-    uint16_t color;
-
-    void setPosition(mInt x_, mInt y_){
-      this->x = x_;
-      this->y = y_;
-    }
-
-    void setColor(mInt color_){
-      this->color = color_;
-    }
-
-    void fillColor(mInt color_){
-      setColor(color_);
-      tft.fillRect(this->x,this->y,this->l,this->h,color_);
-    }
-};
-
-void pintarRetangulo(Rectangle &rect){
-  tft.fillRect(rect.x, rect.y, rect.l, rect.h, rect.color);
-}
+// void pintarRetangulo(Rectangle &rect){
+//   tft.fillRect(rect.x, rect.y, rect.l, rect.h, rect.color);
+// }
 
 void setup(){
   Serial.begin(115200);
@@ -111,10 +89,8 @@ void setup(){
 
 void loop(void){
 
-  Rectangle Verm (127, 91, 5, 1, RED); //coordenas (x,y), tamanho (h, l), cor
-  pintarRetangulo(Verm);
-  Rectangle cursor(1,1,3,3,BLUE);
-  pintarRetangulo(cursor);
+  Verm.fillColor();
+  cursor.fillColor();
 
   for(int i=1; i<127; i++){
     for(int j=1; j<96; j++){
