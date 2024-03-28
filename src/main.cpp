@@ -13,14 +13,20 @@ typedef uint8_t mInt;
 #define MAGENTA 0xF81F
 #define YELLOW  0xFFE0  
 #define WHITE   0xFFFF
+#define DEAD_ZONE 10
 
 #define __CS 2
 #define __DC 4
 
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
 
-Rectangle Verm (127, 91, 5, 1, RED, tft); //coordenas (x,y), tamanho (h, l), cor
+Rectangle Verm (127, 91, 3, 3, RED, tft); //coordenas (x,y), tamanho (h, l), cor
 Rectangle cursor(1,1,3,3,BLUE, tft);
+
+int rX = 0;
+int rY = 0;
+int lX = 0;
+int lY = 0; 
 
 class Joystick {
 
@@ -85,6 +91,14 @@ void setup(){
   tft.setBitrate(50000000);
   pinMode(14,OUTPUT);
   digitalWrite(14,HIGH);
+  pinMode(34,INPUT);
+  pinMode(35,INPUT);
+  pinMode(32,INPUT);
+  pinMode(33,INPUT);
+  pinMode(25,PULLUP);
+  pinMode(26,PULLUP);
+
+
 }
 
 void loop(void){
@@ -92,14 +106,51 @@ void loop(void){
   Verm.fillColor();
   cursor.fillColor();
 
-  for(int i=1; i<127; i++){
-    for(int j=1; j<96; j++){
-      cursor.fillColor(BLACK);
-      cursor.setPosition(i,j);
-      cursor.fillColor(BLUE);
-      delay(10);
+  // for(int i=1; i<127; i++){
+  //   for(int j=1; j<96; j++){
+  //     cursor.fillColor(BLACK);
+  //     cursor.setPosition(i,j);
+  //     cursor.fillColor(BLUE);
+  //     delay(10);
+  //   }
+  // }
+
+    rX = (abs(((analogRead(34))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(34))/20.475)-100) ;
+    rY = (abs(((analogRead(35))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(35))/20.475)-100) ;
+    lX = (abs(((analogRead(32))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(32))/20.475)-100) ;
+    lY = (abs(((analogRead(33))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(33))/20.475)-100) ;
+
+  Serial.print(rX); Serial.print(" "); Serial.print(rY); Serial.print(" "); Serial.print(lX); Serial.print(" "); Serial.println(lY);
+
+  if(rX!=0 || rY!=0){
+    if(rX>0){
+      cursor.incrementX();
+    }
+    if(rX<0){
+      cursor.decrementX();
+    }
+    if(rY>0){
+      cursor.incrementY();
+    }
+    if(rY<0){
+      cursor.decrementY();
     }
   }
 
+  if(lX!=0 || lY!=0){
+    if(lX>0){
+      Verm.incrementX();
+    }
+    if(lX<0){
+      Verm.decrementX();
+    }
+    if(lY>0){
+      Verm.incrementY();
+    }
+    if(lY<0){
+      Verm.decrementY();
+    }
+  }
+  delay(50);
 
 }
