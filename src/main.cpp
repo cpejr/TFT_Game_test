@@ -15,9 +15,6 @@ typedef uint8_t mInt;
 #define YELLOW  0xFFE0  
 #define WHITE   0xFFFF
 
-volatile int16_t curVal1 = 0;
-volatile int16_t oldVal1 = 0;
-
 #define __CS 2
 #define __DC 4
 
@@ -25,9 +22,9 @@ TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
 
 class Joystick {
 
-#define LIMITE_X_LEFT 0
-#define LIMITE_X_RIGTH 128
-#define LIMITE_Y_UP 128
+#define LIMITE_X_LEFT 2
+#define LIMITE_X_RIGTH 127
+#define LIMITE_Y_UP 96
 #define LIMITE_Y_DOWN 0
 
   public:
@@ -83,75 +80,24 @@ class Rectangle{
     uint8_t x, y; //coordenadas
     uint8_t h, l; //altura e largura
     uint16_t color;
+
+    void setPosition(mInt x_, mInt y_){
+      this->x = x_;
+      this->y = y_;
+    }
+
+    void setColor(mInt color_){
+      this->color = color_;
+    }
+
+    void fillColor(mInt color_){
+      setColor(color_);
+      tft.fillRect(this->x,this->y,this->l,this->h,color_);
+    }
 };
 
 void pintarRetangulo(Rectangle &rect){
   tft.fillRect(rect.x, rect.y, rect.l, rect.h, rect.color);
-}
-
-void drawPointerHelper(int16_t val,uint8_t x,uint8_t y,uint8_t r,uint16_t color) {
-
-  float dsec, toSecX, toSecY;
-  
-  int16_t minValue = 0;
-  int16_t maxValue = 255;
-  
-  int fromDegree = 150;//start
-  int toDegree = 240;//end
-  
-  if (val > maxValue) val = maxValue;
-  if (val < minValue) val = minValue;
-  
-  dsec = (((float)(uint16_t)(val - minValue) / (float)(uint16_t)(maxValue - minValue) * toDegree) + fromDegree) * (PI / 180);
-  
-  toSecX = cos(dsec) * (r / 1.35);
-  toSecY = sin(dsec) * (r / 1.35);
-
-  tft.drawLine(x, y, 1 + x + toSecX, 1 + y + toSecY, color);
-  tft.fillCircle(x,y,2,color);
-}
-
-void faceHelper(uint8_t x,uint8_t y,uint8_t r,int from,int to,float dev){
-  float dsec,fromSecX,fromSecY,toSecX,toSecY;
-  int i;
-  for (i = from;i <= to;i += 30) {
-    dsec = i * (PI / 180);
-    fromSecX = cos(dsec) * (r / dev);
-    fromSecY = sin(dsec) * (r / dev);
-    toSecX = cos(dsec) * r;
-    toSecY = sin(dsec) * r;
-    tft.drawLine(1 + x + fromSecX,1 + y + fromSecY,1 + x + toSecX,1 + y + toSecY,WHITE);
-  }
-}
-
-void drawGauge(uint8_t x,uint8_t y,uint8_t r) {
-  tft.drawCircle(x, y, r,WHITE);//draw instrument container
-  faceHelper(x,y,r,126,390,1.3);//draw major ticks
-  if (r > 15) faceHelper(x,y,r,150,375,1.1);//draw minor ticks
-
-}
-
-void drawNeedle(int16_t val,uint8_t x,uint8_t y,uint8_t r,uint16_t color,uint16_t bcolor){
-  uint8_t i;
-  if (curVal1 > oldVal1){
-    for (i = oldVal1; i <= curVal1; i++){
-      drawPointerHelper(i-1,63,63,63,bcolor);
-      drawPointerHelper(i,63,63,63,color);
-      if ((curVal1 - oldVal1) < (128)) delay(1);//ballistic
-    }
-  } 
-  else {
-    for (i = oldVal1; i >= curVal1; i--){
-      drawPointerHelper(i+1,63,63,63,bcolor);
-      drawPointerHelper(i,63,63,63,color);
-      //ballistic
-      if ((oldVal1 - curVal1) >= 128){
-        delay(1);
-      } else {
-        delay(3);
-      }
-    }
-  }
 }
 
 void setup(){
@@ -159,35 +105,25 @@ void setup(){
   Serial.println("Hello!");
   tft.begin();
   tft.setBitrate(50000000);
+  pinMode(14,OUTPUT);
+  digitalWrite(14,HIGH);
 }
 
 void loop(void){
 
-  Rectangle Verm (1, 1, 2, 3, RED); //coordenas (x,y), tamanho (h, l), cor
+  Rectangle Verm (127, 91, 5, 1, RED); //coordenas (x,y), tamanho (h, l), cor
   pintarRetangulo(Verm);
+  Rectangle cursor(1,1,3,3,BLUE);
+  pintarRetangulo(cursor);
+
+  for(int i=1; i<127; i++){
+    for(int j=1; j<96; j++){
+      cursor.fillColor(BLACK);
+      cursor.setPosition(i,j);
+      cursor.fillColor(BLUE);
+      delay(10);
+    }
+  }
 
 
-  /*for(int i= 0; i<3; i++){
-        tft.setRotation(0);
-        tft.fillScreen(RED);
-        delay(1000);
-        tft.fillScreen(BLUE);
-        delay(1000);
-        tft.fillScreen(GREEN);
-        delay(1000);
-        tft.fillScreen(CYAN);
-        delay(1000);
-        tft.fillScreen(MAGENTA);
-        delay(1000);
-        }
-        
-    for(int i= 0; i<10; i++){       
-        tft.fillRect(0,0,128,80, GREEN);
-        tft.fillRect(0,80,128,160, YELLOW);
-        delay(1000);
-        tft.fillRect(0,0,128,80, YELLOW);
-        tft.fillRect(0,80,128,160, GREEN);
-        delay(1000);
-        }
-        */
 }
