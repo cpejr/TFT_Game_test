@@ -106,15 +106,6 @@ void loop(void){
   Verm.fillColor();
   cursor.fillColor();
 
-  // for(int i=1; i<127; i++){
-  //   for(int j=1; j<96; j++){
-  //     cursor.fillColor(BLACK);
-  //     cursor.setPosition(i,j);
-  //     cursor.fillColor(BLUE);
-  //     delay(10);
-  //   }
-  // }
-
     rX = (abs(((analogRead(34))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(34))/20.475)-100) ;
     rY = (abs(((analogRead(35))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(35))/20.475)-100) ;
     lX = (abs(((analogRead(32))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(32))/20.475)-100) ;
