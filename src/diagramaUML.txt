@@ -4,3 +4,14 @@ ATRIBUTOS:
 private x, y, h, l : uint8_t //coordenas e tamanho
 private color : uint16_t
 private original_color : uint16_t
+private display : &TFT_ILI9163C
+
+MÉTODOS:
+public incrementX()
+public decrementX()
+public incrementY()
+public decrementY()
+public setPosition (uint8_t x, uint8_t y)
+public setColor()
+public fillColor()
+public fillColor()
