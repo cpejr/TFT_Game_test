@@ -21,7 +21,6 @@ class Rectangle
         uint8_t x, y; //coordenadas
         uint8_t h, l; //altura e largura
         uint16_t color; //cor
-        uint16_t original_color;
         TFT_ILI9163C& display; //Display de referência onde será exibido o objeto
 
     public:

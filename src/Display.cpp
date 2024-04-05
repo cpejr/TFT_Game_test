@@ -1,7 +1,7 @@
 #include "Display.hpp"
 
 Rectangle::Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor, TFT_ILI9163C& Display_) :  
-    x(cx), y(cy), h(ch), l(cl), color(cColor), display(Display_), original_color(cColor) {}
+    x(cx), y(cy), h(ch), l(cl), color(cColor), display(Display_) {}
 
 void Rectangle::setPosition(mInt x_, mInt y_){
     this->x = x_;
@@ -17,7 +17,7 @@ void Rectangle::fillColor(mInt color_){
     }
 
 void Rectangle::fillColor(){
-    this->display.fillRect(this->x,this->y,this->l,this->h,this->original_color);
+    this->display.fillRect(this->x,this->y,this->l,this->h,this->color);
 }
 
 void Rectangle::incrementX(){

@@ -1,0 +1,6 @@
+classe Rectangle:
+
+ATRIBUTOS:
+private x, y, h, l : uint8_t //coordenas e tamanho
+private color : uint16_t
+private original_color : uint16_t
