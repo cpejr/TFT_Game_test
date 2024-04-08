@@ -66,24 +66,24 @@ void loop(void){
 
   if(Joy.get_lX()!=0 || Joy.get_lY()!=0){
     if(Joy.get_lX()>0){
-      verm.fillColor(BLACK);
+      Verm.fillColor(BLACK);
       Verm.incrementX();
-      verm.fillColor(BLACK);
+      Verm.fillColor();
     }
     if(Joy.get_lX()<0){
-      verm.fillColor(BLACK);
+      Verm.fillColor(BLACK);
       Verm.decrementX();
-      verm.fillColor(BLACK);
+      Verm.fillColor();
     }
     if(Joy.get_lY()>0){
-      verm.fillColor(BLACK);
+      Verm.fillColor(BLACK);
       Verm.incrementY();
-      verm.fillColor(BLACK);
+      Verm.fillColor();
     }
     if(Joy.get_lY()<0){
-      verm.fillColor(BLACK);
+      Verm.fillColor(BLACK);
       Verm.decrementY();
-      verm.fillColor(BLACK);
+      Verm.fillColor();
     }
   }
   delay(50);
