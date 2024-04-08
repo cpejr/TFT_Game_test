@@ -2,18 +2,7 @@
 #include <SPI.h>
 #include "Display.hpp"
 #include "Joystick.hpp"
-
-typedef uint8_t mInt;
-
-// Color definitions
-#define	BLACK   0x0000
-#define	BLUE    0x001F
-#define	RED     0xF800
-#define	GREEN   0x07E0
-#define CYAN    0x07FF
-#define MAGENTA 0xF81F
-#define YELLOW  0xFFE0  
-#define WHITE   0xFFFF
+#include "Cursor.hpp"
 
 #define __CS 2
 #define __DC 4
@@ -21,8 +10,11 @@ typedef uint8_t mInt;
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
 
 Rectangle Verm(127, 91, 3, 3, RED, tft); //coordenas (x,y), tamanho (h, l), cor
-Rectangle cursor(1,1,3,3,BLUE, tft);
-Joystick Joy(34,35,32,33,25,26);
+Rectangle Blue(1,1,10,3,BLUE, tft);
+Joystick Joy(34,35,26);
+Joystick Joy1(32,33,25);
+Cursor cursor1(Joy,&Verm);
+Cursor cursor2(Joy1,&Blue);
 
 void setup(){
   Serial.begin(115200);
@@ -35,56 +27,16 @@ void setup(){
 
 void loop(void){
 
-  Verm.fillColor();
-  cursor.fillColor();
-
   // Serial.print(Joy.get_rX()); Serial.print(" "); Serial.print(Joy.get_rY()); Serial.print(" "); Serial.print(Joy.get_lX()); Serial.print(" "); Serial.println(Joy.get_lY());
-  // Serial.print(Joy.get_buttonR()); Serial.print(" "); Serial.println(Joy.get_buttonL()); 
-
-  if(Joy.get_rX()!=0 || Joy.get_rY()!=0){
-    if(Joy.get_rX()>0){
-      cursor.fillColor(BLACK);
-      cursor.incrementX();
-      cursor.fillColor();
-    }
-    if(Joy.get_rX()<0){
-      cursor.fillColor(BLACK);
-      cursor.decrementX();
-      cursor.fillColor();
-    }
-    if(Joy.get_rY()>0){
-      cursor.fillColor(BLACK);
-      cursor.incrementY();
-      cursor.fillColor();
-    }
-    if(Joy.get_rY()<0){
-      cursor.fillColor(BLACK);
-      cursor.decrementY();
-      cursor.fillColor();
-    }
+  // Serial.print(Joy.get_buttonR()); Serial.print(" "); Serial.println(Joy.get_buttonL());
+  
+  cursor1.move();
+  cursor2.move();
+  if(Joy.get_button()){
+    cursor1.setShape(&Blue);
   }
-
-  if(Joy.get_lX()!=0 || Joy.get_lY()!=0){
-    if(Joy.get_lX()>0){
-      Verm.fillColor(BLACK);
-      Verm.incrementX();
-      Verm.fillColor();
-    }
-    if(Joy.get_lX()<0){
-      Verm.fillColor(BLACK);
-      Verm.decrementX();
-      Verm.fillColor();
-    }
-    if(Joy.get_lY()>0){
-      Verm.fillColor(BLACK);
-      Verm.incrementY();
-      Verm.fillColor();
-    }
-    if(Joy.get_lY()<0){
-      Verm.fillColor(BLACK);
-      Verm.decrementY();
-      Verm.fillColor();
-    }
+  if(Joy1.get_button()){
+    cursor2.setShape(&Verm);
   }
   delay(50);
 

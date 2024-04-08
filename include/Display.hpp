@@ -28,18 +28,22 @@ class Display_obj
         mInt x;
         mInt y;
         uint16_t color; //cor
-        uint16_t original_color;
         TFT_ILI9163C& display; //Display de referência onde será exibido o objeto
 
     public:
         Display_obj(mInt cX, mInt cY, uint16_t cColor, TFT_ILI9163C& Display);
+        mInt getX();
+        mInt getY();
         void setPosition(mInt x_, mInt y_); //Define a posição do objeto no display
-        void setColor(mInt color_); //Define a cor do objeto      
+        void setColor(mInt color_); //Define a cor do objeto
+        virtual void fillColor(mInt color_); //Método polimófico virtual para preencher a forma com a cor especificada (virtual força que as classes derivadas implementem)
+        virtual void fillColor(); //Método polimórfico virtual para preencher a forma com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (virtual força que as classes derivadas implementem)     
 
         void incrementX(); //incrementa a posição do retângulo em 1 pixel na direção X
         void decrementX(); //decrementa a posição do retângulo em 1 pixel na direção X
         void incrementY(); //incrementa a posição do retângulo em 1 pixel na direção Y
         void decrementY(); //decrementa a posição do retângulo em 1 pixel na direção Y
+        
 
 };
 
@@ -52,8 +56,8 @@ class Rectangle : public Display_obj
 
     public:
         Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor, TFT_ILI9163C& Display_); //construtor da classe
-        void fillColor(mInt color_); //Preenche o retângulo com a cor especificada
-        void fillColor(); //Preenche o retângulo com a cor dfinida pro objeto quando nenhuma cor adicional é especificada
+        void fillColor(mInt color_) override; //Preenche o retângulo com a cor especificada (esse método suprime a declaração do mesmo método na classe base se existir)
+        void fillColor() override; //Preenche o retângulo com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (esse método suprime a declaração do mesmo método na classe base se existir)
 };
 
 #endif
