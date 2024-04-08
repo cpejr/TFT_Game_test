@@ -1,6 +1,6 @@
 #ifndef JOYSTICK_
 #define JOYSTICK_
-#define DEAD_ZONE 10
+#define DEAD_ZONE 10 // O valor mínimo de inclinação do joystick até que ele retorne o primeiro valor
 
 
 class Joystick
@@ -15,8 +15,8 @@ class Joystick
         /*Os quatro métodos abaixo retornam as inclinações dos joysticks, em porcentagem valores de -100 a 100,
         onde -100 o Joystick está totalmente inclinado pra esquerda (quando na direção X) ou para cima (quando na direção Y)
         e 100 indica que o Joystick está totalmente inclinado para a direita (quando na direção X) ou para baixo, (quando
-        na direção Y) */
-        
+        na direção Y). Zero indica que o Joystick está centralizado */
+
         int get_rX();
         int get_rY();
         int get_lX();
