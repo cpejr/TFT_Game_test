@@ -7,26 +7,34 @@ Joystick::Joystick(int cpin_rX, int cpin_rY, int cpin_lX, int cpin_lY, int cbutt
         pinMode(pin_rY,INPUT);
         pinMode(pin_lX,INPUT);
         pinMode(pin_lY,INPUT);
-        pinMode(button_l,PULLUP);
-        pinMode(button_r,PULLUP);
-    }
+        pinMode(button_l,INPUT_PULLUP);
+        pinMode(button_r,INPUT_PULLUP);
+}
 
 int Joystick::get_rX(){
     this->rX = (abs(((analogRead(34))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(34))/20.475)-100);
     return this->rX;
-    }
+}
 
 int Joystick::get_rY(){
     this->rY = (abs(((analogRead(35))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(35))/20.475)-100);
     return this->rY;
-    }
+}
 
 int Joystick::get_lX(){
     this->lX = (abs(((analogRead(32))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(32))/20.475)-100);
     return this->lX;
-    }
+}
 
 int Joystick::get_lY(){
     this->lY = (abs(((analogRead(33))/20.475)-100)<DEAD_ZONE)? 0 : (((analogRead(33))/20.475)-100);
     return this->lY;
-    }
+}
+
+bool Joystick::get_buttonR(){
+    return !digitalRead(button_r);
+}
+
+bool Joystick::get_buttonL(){
+    return !digitalRead(button_l);
+}

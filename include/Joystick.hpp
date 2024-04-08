@@ -21,6 +21,9 @@ class Joystick
         int get_rY();
         int get_lX();
         int get_lY();
+
+        bool get_buttonR();
+        bool get_buttonL();
 };
 
 
