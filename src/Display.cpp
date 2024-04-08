@@ -1,4 +1,8 @@
 #include "Display.hpp"
+#define MAX_X 126
+#define MAX_Y 91
+#define MIN_X 2
+#define MIN_Y 1
 
 Rectangle::Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor, TFT_ILI9163C& Display_) :  
     x(cx), y(cy), h(ch), l(cl), color(cColor), display(Display_), original_color(cColor) {}
@@ -22,24 +26,24 @@ void Rectangle::fillColor(){
 
 void Rectangle::incrementX(){
     fillColor(BLACK);
-    this->x++;
+    this->x<MAX_X?this->x++:this->x=this->x;
     fillColor();
 }
 
 void Rectangle::decrementX(){
     fillColor(BLACK);
-    this->x--;
+    this->x>MIN_X?this->x--:this->x=this->x;
     fillColor();
 }
 
 void Rectangle::incrementY(){
     fillColor(BLACK);
-    this->y++;
+    this->y<MAX_Y?this->y++:this->y=this->y;
     fillColor();
 }
 
 void Rectangle::decrementY(){
     fillColor(BLACK);
-    this->y--;
+    this->y>MIN_Y?this->y--:this->y=this->y;
     fillColor();
 }
