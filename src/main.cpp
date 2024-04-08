@@ -31,13 +31,8 @@ void loop(void){
   // Serial.print(Joy.get_buttonR()); Serial.print(" "); Serial.println(Joy.get_buttonL());
   
   cursor1.move();
-  cursor2.move();
   if(Joy.get_button()){
     cursor1.setShape(&Blue);
   }
-  if(Joy1.get_button()){
-    cursor2.setShape(&Verm);
-  }
   delay(50);
-
 }

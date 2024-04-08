@@ -22,5 +22,6 @@ void Cursor::move(){
 
 void Cursor::setShape(Display_obj* newShape_){
     newShape_->setPosition(Shape->getX(),Shape->getY());
+    Shape->fillColor(BLACK);
     Shape = newShape_;
 }
