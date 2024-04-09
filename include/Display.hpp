@@ -1,7 +1,6 @@
 #ifndef DISPLAY_
 #define DISPLAY_
 
-
 #define MAX_X 126
 #define MAX_Y 91
 #define MIN_X 2
