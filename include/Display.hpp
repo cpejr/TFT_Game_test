@@ -59,6 +59,15 @@ class Rectangle : public Display_obj
         void fillColor() override; //Preenche o retângulo com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (esse método suprime a declaração do mesmo método na classe base se existir)
 };
 
+class Circle : public Display_obj
+{
+    private:
+        uint8_t r; //altura e largura
 
+    public:
+        Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, TFT_ILI9163C &Display_);
+       void fillColor(mInt color_) override;
+       void fillColor() override;
+};
 
 #endif

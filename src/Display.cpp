@@ -53,3 +53,15 @@ void Rectangle::fillColor(mInt color_){
 void Rectangle::fillColor(){
     this->display.fillRect(this->x,this->y,this->l,this->h,this->color);
 }
+
+Circle::Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, TFT_ILI9163C &Display_):
+    Display_obj(cx, cy, cColor, Display_), r(cr) {}
+
+void Circle::fillColor(mInt color_) {
+    this->display.fillCircle(this->x, this->y, this->r, color_);
+}
+
+void Circle::fillColor(){
+    this->fillColor(this->color);
+}
+
