@@ -62,12 +62,23 @@ class Rectangle : public Display_obj
 class Circle : public Display_obj
 {
     private:
-        uint8_t r; //altura e largura
+        uint8_t r; //raio
 
     public:
         Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, TFT_ILI9163C &Display_);
        void fillColor(mInt color_) override;
        void fillColor() override;
+};
+
+class Triangle : public Display_obj
+{
+    private:
+        mInt x[3], y[3]; //coordenadas dos vertices
+    public:
+        Triangle(mInt cx[3], mInt cy[3], uint16_t cColor, TFT_ILI9163C &Display_);
+        void fillColor (mInt color_) override;
+        void fillColor () override;
+
 };
 
 #endif
