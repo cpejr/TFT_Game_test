@@ -59,4 +59,6 @@ class Rectangle : public Display_obj
         void fillColor() override; //Preenche o retângulo com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (esse método suprime a declaração do mesmo método na classe base se existir)
 };
 
+
+
 #endif
