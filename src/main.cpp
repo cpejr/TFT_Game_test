@@ -21,6 +21,12 @@ Rectangle verd(12, 1, 10, 10, GREEN, tft);
 Joystick Joy(34,35,26);
 Cursor cursor(Joy,&whiteCursor);
 
+bool preencher(Cursor cursor_, Rectangle forma_){
+
+  if (*cursor_->Shape->getX() < forma_.getX()+10 || cursor_.Shape->getX() > forma_.getX() - 10){
+
+  }
+}
 
 void setup(){
   Serial.begin(115200);
@@ -38,7 +44,7 @@ void loop(void){
   
   cursor.move();
   if(Joy.get_button()){
-    tft.fillScreen(CYAN);
+    
   }
   delay(50);
 }
