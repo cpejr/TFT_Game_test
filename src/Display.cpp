@@ -72,11 +72,11 @@ void Circle::fillColor(){
 
 Triangle :: Triangle (mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_):
     Display_obj(cx, cy, cColor, Display_) {
-        x1 = x-2;
+        x1 = x-3;
         x2 = x;
-        x3 = x+2;
+        x3 = x+3;
         y1 = y-2;
-        y2 = y+2;
+        y2 = y+3;
         y3 = y-2;
     }
 
@@ -112,6 +112,77 @@ void Triangle::decrementY(){
     fillColor();
 }
 
+Heart::Heart(mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_):
+    Display_obj(cx, cy, cColor, Display_) {
+        circle1_x = x-3;
+        circle1_y = y;
+        circle2_x = x+1;
+        circle2_y = y;
+        triangle_x = x-1;
+        triangle_y = y+3;
+        triangulo = new Triangle(triangle_x,triangle_y,this->color,this->display);
+        triangulo->y2 = triangle_y+2;
+    }
+void Heart::setColor(uint16_t color_){
+    this->color = color_;
+    triangulo->setColor(color_);
+}
+
+void Heart::fillColor(uint16_t color_){
+    this->display.fillCircle(this->circle1_x, this->circle1_y, this->r, color_);
+    this->display.fillCircle(this->circle2_x, this->circle2_y, this->r, color_);
+    triangulo->fillColor(color_);
+}
+
+void Heart::fillColor(){
+    this->display.fillCircle(this->circle1_x, this->circle1_y, this->r, this->color);
+    this->display.fillCircle(this->circle2_x, this->circle2_y, this->r, this->color);
+    triangulo->fillColor();
+}
+
+void Heart::incrementX(){
+    fillColor(BLACK);
+    if(this->x<MAX_X){
+        this->x++;
+        circle1_x++;
+        circle2_x++;
+        triangulo->incrementX();
+    }
+    fillColor();
+}
+
+void Heart::decrementX(){
+    fillColor(BLACK);
+    if(this->x>MIN_X){
+        this->x--;
+        circle1_x--;
+        circle2_x--;
+        triangulo->decrementX();
+    }
+    fillColor();
+}
+
+void Heart::incrementY(){
+    fillColor(BLACK);
+    if(this->y<MAX_Y){
+        this->y++;
+        circle1_y++;
+        circle2_y++;
+        triangulo->incrementY();
+    }
+    fillColor();
+}
+
+void Heart::decrementY(){
+    fillColor(BLACK);
+    if(this->y>MIN_Y){
+        this->y--;
+        circle1_y--;
+        circle2_y--;
+        triangulo->decrementY();
+    }
+    fillColor();
+}
 
 
 

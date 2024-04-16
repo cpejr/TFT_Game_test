@@ -2,7 +2,7 @@
 #include <random>
 
 Display_obj* ShapeRandomizer(TFT_ILI9163C& Display){
-    int Random = random(0,3);
+    int Random = random(0,4);
     int RandX = random(5,122);
     int RandY = random(10,91);
     uint16_t color = random(31,66000);
@@ -15,5 +15,8 @@ Display_obj* ShapeRandomizer(TFT_ILI9163C& Display){
     }
     if(Random > 2 && Random <=3){
         return new Triangle(RandX, RandY, color, Display);
+    }
+    if(Random > 3 && Random <=4){
+        return new Heart(RandX, RandY, color, Display);
     }
 };

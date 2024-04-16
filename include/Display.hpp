@@ -35,7 +35,7 @@ class Display_obj
         mInt getY();
         uint16_t getColor();
         void setPosition(mInt x_, mInt y_); //Define a posição do objeto no display
-        void setColor(uint16_t color_); //Define a cor do objeto
+        virtual void setColor(uint16_t color_); //Define a cor do objeto
         virtual void fillColor(uint16_t color_); //Método polimófico virtual para preencher a forma com a cor especificada (virtual força que as classes derivadas implementem)
         virtual void fillColor(); //Método polimórfico virtual para preencher a forma com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (virtual força que as classes derivadas implementem)    
 
@@ -72,8 +72,9 @@ class Circle : public Display_obj
 class Triangle : public Display_obj
 {
     private:
-        mInt x1, x2, x3, y1, y2, y3;
+        mInt x1, x2, x3, y1, y3;
     public:
+        mInt  y2;
         Triangle(mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_);
         void fillColor (uint16_t color_) override;
         void fillColor () override;
@@ -83,4 +84,26 @@ class Triangle : public Display_obj
         void decrementY() override; //decrementa a posição do retângulo em 1 pixel na direção Y
 
 };
+
+class Heart : public Display_obj
+{
+    private:
+
+        mInt circle1_x, circle2_x, triangle_x, circle1_y, circle2_y, triangle_y;
+        mInt r = 2;
+        Triangle* triangulo;
+
+    public:
+        Heart(mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_);
+        void fillColor (uint16_t color_) override;
+        void setColor(uint16_t color_) override;
+        void fillColor () override;
+        void incrementX() override; //incrementa a posição do retângulo em 1 pixel na direção X
+        void decrementX() override; //decrementa a posição do retângulo em 1 pixel na direção X
+        void incrementY() override; //incrementa a posição do retângulo em 1 pixel na direção Y
+        void decrementY() override;
+
+}
+;
+
 #endif
