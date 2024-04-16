@@ -18,7 +18,7 @@ void Display_obj::setPosition(mInt x_, mInt y_){
     this->y = y_;
 }
 
-void Display_obj::setColor(mInt color_){
+void Display_obj::setColor(uint16_t color_){
     this->color = color_;
 }
 
@@ -46,23 +46,23 @@ void Display_obj::decrementY(){
     fillColor();
 }
 
-void Display_obj::fillColor(mInt color_){}
+void Display_obj::fillColor(uint16_t color_){}
 void Display_obj::fillColor(){}
 
 Rectangle::Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor, TFT_ILI9163C& Display_) : Display_obj(cx, cy, cColor, Display_), h(ch), l(cl) {}
 
-void Rectangle::fillColor(mInt color_){
+void Rectangle::fillColor(uint16_t color_){
     this->display.fillRect(this->x,this->y,this->l,this->h,color_);
 }
 
 void Rectangle::fillColor(){
-    this->display.fillRect(this->x,this->y,this->l,this->h,this->color);
+    this->display.fillRect(this->x,this->y,this->l,this->h,color);
 }
 
 Circle::Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, TFT_ILI9163C &Display_):
     Display_obj(cx, cy, cColor, Display_), r(cr) {}
 
-void Circle::fillColor(mInt color_) {
+void Circle::fillColor(uint16_t color_) {
     this->display.fillCircle(this->x, this->y, this->r, color_);
 }
 
@@ -80,7 +80,7 @@ Triangle :: Triangle (mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_)
         y3 = y-2;
     }
 
-void Triangle::fillColor(mInt color_){
+void Triangle::fillColor(uint16_t color_){
     this->display.fillTriangle(x1, y1, x2, y2, x3, y3, color_);
 }
 
@@ -90,25 +90,25 @@ void Triangle::fillColor(){
 
 void Triangle::incrementX(){
     fillColor(BLACK);
-    this->x<MAX_X?x1++, x2++, x3++ :this->x=this->x;
+    this->x<MAX_X?this->x++, x1++, x2++, x3++ :this->x=this->x;
     fillColor();
 }
 
 void Triangle::decrementX(){
     fillColor(BLACK);
-    this->x>MIN_X?this->x1--, x2--, x3-- :this->x=this->x;
+    this->x>MIN_X?this->x--, x1--, x2--, x3-- :this->x=this->x;
     fillColor();
 }
 
 void Triangle::incrementY(){
     fillColor(BLACK);
-    this->y<MAX_Y?y1++, y2++, y3++ :this->y=this->y;
+    this->y<MAX_Y?this->y++, y1++, y2++, y3++ :this->y=this->y;
     fillColor();
 }
 
 void Triangle::decrementY(){
     fillColor(BLACK);
-    this->y>MIN_Y?y1--, y2--, y3--:this->y=this->y;
+    this->y>MIN_Y?this->y--, y1--, y2--, y3--:this->y=this->y;
     fillColor();
 }
 
