@@ -1,7 +1,6 @@
 #ifndef DISPLAY_
 #define DISPLAY_
 
-
 #define MAX_X 126
 #define MAX_Y 91
 #define MIN_X 2
@@ -56,6 +55,28 @@ class Rectangle : public Display_obj
         Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor, TFT_ILI9163C& Display_); //construtor da classe
         void fillColor(mInt color_) override; //Preenche o retângulo com a cor especificada (esse método suprime a declaração do mesmo método na classe base se existir)
         void fillColor() override; //Preenche o retângulo com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (esse método suprime a declaração do mesmo método na classe base se existir)
+};
+
+class Circle : public Display_obj
+{
+    private:
+        uint8_t r; //raio
+
+    public:
+        Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, TFT_ILI9163C &Display_);
+       void fillColor(mInt color_) override;
+       void fillColor() override;
+};
+
+class Triangle : public Display_obj
+{
+    private:
+        mInt x[3], y[3]; //coordenadas dos vertices
+    public:
+        Triangle(mInt cx[3], mInt cy[3], uint16_t cColor, TFT_ILI9163C &Display_);
+        void fillColor (mInt color_) override;
+        void fillColor () override;
+
 };
 
 #endif

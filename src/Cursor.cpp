@@ -25,3 +25,5 @@ void Cursor::setShape(Display_obj* newShape_){
     Shape->fillColor(BLACK);
     Shape = newShape_;
 }
+
+

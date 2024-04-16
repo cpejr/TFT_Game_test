@@ -53,3 +53,28 @@ void Rectangle::fillColor(mInt color_){
 void Rectangle::fillColor(){
     this->display.fillRect(this->x,this->y,this->l,this->h,this->color);
 }
+
+Circle::Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, TFT_ILI9163C &Display_):
+    Display_obj(cx, cy, cColor, Display_), r(cr) {}
+
+void Circle::fillColor(mInt color_) {
+    this->display.fillCircle(this->x, this->y, this->r, color_);
+}
+
+void Circle::fillColor(){
+    this->fillColor(this->color);
+}
+
+Triangle :: Triangle (mInt cx[3], mInt cy[3], uint16_t cColor, TFT_ILI9163C &Display_):
+    Display_obj((cx[0]+cx[1]+cx[2])/3, (cy[0]+cy[2]+cy[3])/3, cColor, Display_) {
+        x[3] = cx[3];
+        y[3] = cy[3];
+    }
+
+void Triangle::fillColor(mInt color_){
+    this->display.fillTriangle(x[0], y[0], x[1], y[1], x[2], y[2], color_);
+}
+
+void Triangle::fillColor(){
+    this->fillColor(this->color);
+}

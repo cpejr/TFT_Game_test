@@ -9,11 +9,24 @@
 
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
 
-Rectangle Verm(127, 91, 3, 3, RED, tft); //coordenas (x,y), tamanho (h, l), cor
-Rectangle Blue(1,1,10,3,BLUE, tft);
+Rectangle whiteCursor(127, 91, 3, 3, WHITE, tft);
 Joystick Joy(34,35,26);
-Joystick Joy1(32,33,25);
-Cursor cursor1(Joy,&Verm);
+Cursor cursor(Joy,&whiteCursor);
+
+
+Rectangle verm(127, 91, 3, 3, RED, tft); //coordenas (x,y), tamanho (h, l), cor
+Rectangle azul(1, 1, 10, 10, BLUE, tft);
+Rectangle verd(12, 1, 10, 10, GREEN, tft);
+
+Joystick Joy(34,35,26);
+Cursor cursor(Joy,&whiteCursor);
+
+bool preencher(Cursor cursor_, Rectangle forma_){
+
+  if (*cursor_->Shape->getX() < forma_.getX()+10 || cursor_.Shape->getX() > forma_.getX() - 10){
+
+  }
+}
 
 void setup(){
   Serial.begin(115200);
@@ -29,9 +42,9 @@ void loop(void){
   // Serial.print(Joy.get_rX()); Serial.print(" "); Serial.print(Joy.get_rY()); Serial.print(" "); Serial.print(Joy.get_lX()); Serial.print(" "); Serial.println(Joy.get_lY());
   // Serial.print(Joy.get_buttonR()); Serial.print(" "); Serial.println(Joy.get_buttonL());
   
-  cursor1.move();
+  cursor.move();
   if(Joy.get_button()){
-    cursor1.setShape(&Blue);
+    
   }
   delay(50);
 }
