@@ -1,6 +1,8 @@
 #include "Cursor.hpp"
 
-Cursor::Cursor(Joystick& joystick_, Display_obj* Shape_): joystick(joystick_),Shape(Shape_){}
+Cursor::Cursor(Joystick& joystick_, Display_obj* Shape_, uint16_t color_): joystick(joystick_),Shape(Shape_), color(color_){
+  Shape->setColor(color);
+}
 
 void Cursor::move(){
     Shape->fillColor();
@@ -23,7 +25,16 @@ void Cursor::move(){
 void Cursor::setShape(Display_obj* newShape_){
     newShape_->setPosition(Shape->getX(),Shape->getY());
     Shape->fillColor(BLACK);
-    Shape = newShape_;
+    Shape = newShape_;      
+    Shape->setColor(color);
+}
+
+int Cursor::getX(){
+  return Shape->getX();
+}
+
+int Cursor::getY(){
+  return Shape->getY();
 }
 
 

@@ -33,15 +33,16 @@ class Display_obj
         Display_obj(mInt cX, mInt cY, uint16_t cColor, TFT_ILI9163C& Display);
         mInt getX();
         mInt getY();
+        uint16_t getColor();
         void setPosition(mInt x_, mInt y_); //Define a posição do objeto no display
         void setColor(mInt color_); //Define a cor do objeto
         virtual void fillColor(mInt color_); //Método polimófico virtual para preencher a forma com a cor especificada (virtual força que as classes derivadas implementem)
         virtual void fillColor(); //Método polimórfico virtual para preencher a forma com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (virtual força que as classes derivadas implementem)    
 
-        void incrementX(); //incrementa a posição do retângulo em 1 pixel na direção X
-        void decrementX(); //decrementa a posição do retângulo em 1 pixel na direção X
-        void incrementY(); //incrementa a posição do retângulo em 1 pixel na direção Y
-        void decrementY(); //decrementa a posição do retângulo em 1 pixel na direção Y
+        virtual void incrementX(); //incrementa a posição do retângulo em 1 pixel na direção X
+        virtual void decrementX(); //decrementa a posição do retângulo em 1 pixel na direção X
+        virtual void incrementY(); //incrementa a posição do retângulo em 1 pixel na direção Y
+        virtual void decrementY(); //decrementa a posição do retângulo em 1 pixel na direção Y
         
 
 };
@@ -71,12 +72,15 @@ class Circle : public Display_obj
 class Triangle : public Display_obj
 {
     private:
-        mInt x[3], y[3]; //coordenadas dos vertices
+        mInt x1, x2, x3, y1, y2, y3;
     public:
-        Triangle(mInt cx[3], mInt cy[3], uint16_t cColor, TFT_ILI9163C &Display_);
+        Triangle(mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_);
         void fillColor (mInt color_) override;
         void fillColor () override;
+        void incrementX() override; //incrementa a posição do retângulo em 1 pixel na direção X
+        void decrementX() override; //decrementa a posição do retângulo em 1 pixel na direção X
+        void incrementY() override; //incrementa a posição do retângulo em 1 pixel na direção Y
+        void decrementY() override; //decrementa a posição do retângulo em 1 pixel na direção Y
 
 };
-
 #endif

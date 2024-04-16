@@ -3,30 +3,23 @@
 #include "Display.hpp"
 #include "Joystick.hpp"
 #include "Cursor.hpp"
+#include "ShapeRandomizer.hpp"
 
 #define __CS 2
 #define __DC 4
 
 TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC);
 
-Rectangle whiteCursor(127, 91, 3, 3, WHITE, tft);
 Joystick Joy(34,35,26);
-Cursor cursor(Joy,&whiteCursor);
+Joystick Joy2(32,33,25);
 
 
-Rectangle verm(127, 91, 3, 3, RED, tft); //coordenas (x,y), tamanho (h, l), cor
-Rectangle azul(1, 1, 10, 10, BLUE, tft);
-Rectangle verd(12, 1, 10, 10, GREEN, tft);
+Rectangle verm(50, 50, 3, 3, YELLOW, tft); //coordenas (x,y), tamanho (h, l), cor
+Rectangle azul(1, 1, 3, 3, BLUE, tft);
+Display_obj* randomico = ShapeRandomizer(tft);
 
-Joystick Joy(34,35,26);
-Cursor cursor(Joy,&whiteCursor);
-
-bool preencher(Cursor cursor_, Rectangle forma_){
-
-  if (*cursor_->Shape->getX() < forma_.getX()+10 || cursor_.Shape->getX() > forma_.getX() - 10){
-
-  }
-}
+Cursor cursor(Joy, &verm, YELLOW);
+Cursor cursor2(Joy2, &azul, BLUE);
 
 void setup(){
   Serial.begin(115200);
@@ -38,13 +31,17 @@ void setup(){
 }
 
 void loop(void){
-
-  // Serial.print(Joy.get_rX()); Serial.print(" "); Serial.print(Joy.get_rY()); Serial.print(" "); Serial.print(Joy.get_lX()); Serial.print(" "); Serial.println(Joy.get_lY());
-  // Serial.print(Joy.get_buttonR()); Serial.print(" "); Serial.println(Joy.get_buttonL());
-  
-  cursor.move();
-  if(Joy.get_button()){
-    
+    randomico->fillColor();
+  if(Joy.get_button()&& abs(randomico->getX() - cursor.getX()) < 5 && abs(randomico->getY() - cursor.getY())<5){
+    cursor.setShape(randomico); 
+    randomico = ShapeRandomizer(tft);   
   }
+  if(Joy2.get_button()&& abs(randomico->getX() - cursor2.getX()) < 5 && abs(randomico->getY() - cursor2.getY())<5){
+    cursor2.setShape(randomico); 
+    randomico = ShapeRandomizer(tft);   
+  }
+  cursor.move();
+  cursor2.move();
+
   delay(50);
 }
