@@ -14,7 +14,6 @@ Rectangle Blue(1,1,10,3,BLUE, tft);
 Joystick Joy(34,35,26);
 Joystick Joy1(32,33,25);
 Cursor cursor1(Joy,&Verm);
-Cursor cursor2(Joy1,&Blue);
 
 void setup(){
   Serial.begin(115200);

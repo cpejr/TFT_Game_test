@@ -6,7 +6,7 @@
 class Joystick
 {
     private:
-        int pin_X, pin_Y, button; //pinos do joystick (funciona como quatro potenciômetros e dois botões)
+        int pin_X, pin_Y, button; //pinos do joystick (funciona como dois potenciômetros e um botões)
         int X, Y; //Inclinação do joystick
 
     public:

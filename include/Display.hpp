@@ -37,7 +37,7 @@ class Display_obj
         void setPosition(mInt x_, mInt y_); //Define a posição do objeto no display
         void setColor(mInt color_); //Define a cor do objeto
         virtual void fillColor(mInt color_); //Método polimófico virtual para preencher a forma com a cor especificada (virtual força que as classes derivadas implementem)
-        virtual void fillColor(); //Método polimórfico virtual para preencher a forma com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (virtual força que as classes derivadas implementem)     
+        virtual void fillColor(); //Método polimórfico virtual para preencher a forma com a cor dfinida pro objeto quando nenhuma cor adicional é especificada (virtual força que as classes derivadas implementem)    
 
         void incrementX(); //incrementa a posição do retângulo em 1 pixel na direção X
         void decrementX(); //decrementa a posição do retângulo em 1 pixel na direção X
@@ -46,8 +46,6 @@ class Display_obj
         
 
 };
-
-
 
 class Rectangle : public Display_obj
 {
