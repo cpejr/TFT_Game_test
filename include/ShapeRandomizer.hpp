@@ -5,10 +5,10 @@
 #include "Cursor.hpp"
 #include "Display.hpp"
 #include <Adafruit_GFX.h>
-#include <TFT_ILI9163C.h>
+#include <Adafruit_ST7735.h>
 
 /*Essa função serve apenas para criar uma forma aleatória (e de cor aleatória) do tipo Display_obj (suas formas derivadas) em qualquer posição da tela*/
 
-Display_obj* ShapeRandomizer(TFT_ILI9163C& Display);
+Display_obj* ShapeRandomizer(Adafruit_ST7735& Display);
 
 #endif

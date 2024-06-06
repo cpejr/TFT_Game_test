@@ -9,10 +9,11 @@ marca ponto e o seu cursor muda para a mesma forma do objeto em que ele clicou. 
 #include "Cursor.hpp"
 #include "ShapeRandomizer.hpp"
 
-#define __CS 2
-#define __DC 4
+#define TFT_CS 15
+#define TFT_DC 2
+#define TFT_RST 4
 
-TFT_ILI9163C tft = TFT_ILI9163C(__CS, __DC); //Display onde será exibido o joguinho
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST); //Display onde será exibido o joguinho
 
 /*As pontuações dos dois jogadores*/
 int ScoreA = 0;
@@ -35,8 +36,10 @@ Cursor cursor2(Joy2, &azul, BLUE);
 void setup(){
   Serial.begin(115200);
   Serial.println("Hello!");
-  tft.begin();
-  tft.setBitrate(50000000);
+  tft.initR(INITR_BLACKTAB);
+  tft.setRotation(1);
+  // Limpa o display
+  tft.fillScreen(ST7735_BLACK);
 
   /*O pino a seguir quando colocado em LOW, reseta o display*/
   pinMode(14,OUTPUT);
@@ -54,7 +57,7 @@ void loop(void){
     randomico->fillColor(BLACK);
     cursor.setShape(randomico); 
     randomico = ShapeRandomizer(tft);
-  tft.setCursor(63,1);
+  tft.setCursor(80,1);
   tft.setTextColor(BLACK);
   tft.setTextSize(1);
   tft.print(ScoreV);
@@ -79,13 +82,13 @@ void loop(void){
   tft.setTextSize(1);
   tft.print(ScoreA);
 
-  tft.setCursor(63,1);
+  tft.setCursor(80,1);
   tft.setTextColor(GREEN);
   tft.setTextSize(1);
   tft.print(ScoreV);
 
   //Desenha uma linha branca para separar a área de pontuações da área onde os cursores podem se mover
-  tft.fillRect(1,9,130,1,WHITE);
+  tft.fillRect(1,9,160,1,WHITE);
 
   //Possibilita a movimentação dos cursores em 1 pixel a cada execução do loop
   cursor.move();

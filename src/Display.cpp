@@ -1,6 +1,6 @@
 #include "Display.hpp"
 
-Display_obj::Display_obj(mInt cX, mInt cY, uint16_t cColor, TFT_ILI9163C& Display) : x(cX), y(cY),color(cColor), display(Display) {}
+Display_obj::Display_obj(mInt cX, mInt cY, uint16_t cColor, Adafruit_ST7735& Display) : x(cX), y(cY),color(cColor), display(Display) {}
 
 mInt Display_obj::getX(){
     return this->x;
@@ -49,7 +49,7 @@ void Display_obj::decrementY(){
 void Display_obj::fillColor(uint16_t color_){}
 void Display_obj::fillColor(){}
 
-Rectangle::Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor, TFT_ILI9163C& Display_) : Display_obj(cx, cy, cColor, Display_), h(ch), l(cl) {}
+Rectangle::Rectangle (mInt cx, mInt cy, mInt ch, mInt cl, uint16_t cColor, Adafruit_ST7735& Display_) : Display_obj(cx, cy, cColor, Display_), h(ch), l(cl) {}
 
 void Rectangle::fillColor(uint16_t color_){
     this->display.fillRect(this->x,this->y,this->l,this->h,color_);
@@ -59,7 +59,7 @@ void Rectangle::fillColor(){
     this->display.fillRect(this->x,this->y,this->l,this->h,color);
 }
 
-Circle::Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, TFT_ILI9163C &Display_):
+Circle::Circle (mInt cx, mInt cy, mInt cr, uint16_t cColor, Adafruit_ST7735 &Display_):
     Display_obj(cx, cy, cColor, Display_), r(cr) {}
 
 void Circle::fillColor(uint16_t color_) {
@@ -70,7 +70,7 @@ void Circle::fillColor(){
     this->display.fillCircle(this->x, this->y, this->r,this->color);
 }
 
-Triangle :: Triangle (mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_):
+Triangle :: Triangle (mInt cx, mInt cy, uint16_t cColor, Adafruit_ST7735 &Display_):
     Display_obj(cx, cy, cColor, Display_) {
         x1 = x-3;
         x2 = x;
@@ -112,7 +112,7 @@ void Triangle::decrementY(){
     fillColor();
 }
 
-Heart::Heart(mInt cx, mInt cy, uint16_t cColor, TFT_ILI9163C &Display_):
+Heart::Heart(mInt cx, mInt cy, uint16_t cColor, Adafruit_ST7735 &Display_):
     Display_obj(cx, cy, cColor, Display_) {
         circle1_x = x-3;
         circle1_y = y;

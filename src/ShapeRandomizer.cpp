@@ -1,7 +1,7 @@
 #include "ShapeRandomizer.hpp"
 #include <random>
 
-Display_obj* ShapeRandomizer(TFT_ILI9163C& Display){
+Display_obj* ShapeRandomizer(Adafruit_ST7735& Display){
     int Random = random(0,4);
     int RandX = random(5,122);
     int RandY = random(10,91);
